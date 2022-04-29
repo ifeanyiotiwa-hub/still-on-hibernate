@@ -5,6 +5,7 @@ import io.codewithwinnie.sdjpa.entity.Author;
 import io.codewithwinnie.sdjpa.repositories.AuthorRepository;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Component
@@ -27,7 +28,7 @@ public class AuthorDaoImpl implements AuthorDao {
     
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        return authorRepository.findByFirstNameAndLastName(firstName, lastName);
+        return authorRepository.findByFirstNameAndLastName(firstName, lastName).orElseThrow(EntityNotFoundException::new);
     }
     
     @Override

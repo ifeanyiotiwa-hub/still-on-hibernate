@@ -8,11 +8,6 @@ import java.util.Objects;
  * @author Ifeanyichukwu Otiwa
  */
 
-@NamedQueries({
-        @NamedQuery(name = "book_find_all", query = "FROM Book"),
-        @NamedQuery(name = "find_book_by_title", query = "FROM Book b WHERE b.title = :title")
-})
-@NamedQuery(name = "get_all_books", query = "FROM Book")
 @Entity
 public class Book {
 
@@ -23,8 +18,7 @@ public class Book {
     private String title;
     private String isbn;
     private String publisher;
-    @Transient
-    private Author authorId;
+    private Long authorId;
 
     public Book() {
 
@@ -83,11 +77,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Author getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Author authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
     
