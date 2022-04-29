@@ -12,4 +12,6 @@ public interface BookDao {
     void updateBook(Book saved);
     
     Book findBookByTitle(String clean_code);
+    
+    Book findByISBN(String isbn);
 }

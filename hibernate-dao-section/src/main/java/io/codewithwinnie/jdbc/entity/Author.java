@@ -1,15 +1,13 @@
 package io.codewithwinnie.jdbc.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 /**
  * <PRE>Created by on 04/28/22.</PRE>
  * @author Ifeanyichukwu Otiwa
  */
+@NamedQuery(name = "author", query = "FROM Author")
 @Entity
 public class Author {
 

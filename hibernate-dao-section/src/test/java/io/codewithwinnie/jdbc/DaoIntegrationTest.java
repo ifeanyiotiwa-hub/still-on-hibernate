@@ -4,6 +4,7 @@ import io.codewithwinnie.jdbc.dao.AuthorDao;
 import io.codewithwinnie.jdbc.dao.BookDao;
 import io.codewithwinnie.jdbc.entity.Author;
 import io.codewithwinnie.jdbc.entity.Book;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -159,5 +160,25 @@ public class DaoIntegrationTest {
         List<Author> authorList = authorDao.listAuthorByLastNameLike("Walls");
         assertThat(authorList).isNotNull();
         assertThat(authorList.size()).isGreaterThan(0);
+    }
+    
+    
+    @Test
+    void testFindBookByISBN() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST");
+        
+        Book saved = bookDao.saveNewBook(book);
+        
+        Book fetched = bookDao.findByISBN(book.getIsbn());
+        assertThat(fetched).isNotNull();
+    }
+    
+    @Test
+    void testFindAllAuthors() {
+        List<Author> authors = authorDao.findAll();
+        authors.forEach(System.err::println);
+        assertThat(authors.size()).isGreaterThan(0);
     }
 }

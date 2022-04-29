@@ -9,6 +9,8 @@ import java.util.List;
  * @author Ifeanyichukwu Otiwa
  */
 public interface AuthorDao {
+    
+    List<Author> findAll();
     Author getById(Long id);
 
     Author findAuthorByName(String firstName, String lastName);
