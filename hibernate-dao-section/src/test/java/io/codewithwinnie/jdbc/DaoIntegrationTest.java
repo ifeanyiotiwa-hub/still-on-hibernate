@@ -63,6 +63,18 @@ public class DaoIntegrationTest {
     }
     
     @Test
+    void testFindBookByTitleNative() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST" + RandomString.make());
+        
+        Book saved = bookDao.saveNewBook(book);
+        
+        Book fetched = bookDao.findBookByTitleNative(book.getTitle());
+        assertThat(fetched).isNotNull();
+    }
+    
+    @Test
     void testFindBookByISBN() {
         Book book = new Book();
         book.setIsbn("1234" + RandomString.make());

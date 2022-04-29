@@ -22,4 +22,6 @@ public interface BookDao {
     
     Book findBookByTitleCriteria(String title);
     
+    Book findBookByTitleNative(String title);
 }
+
