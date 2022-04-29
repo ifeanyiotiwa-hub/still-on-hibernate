@@ -14,14 +14,10 @@ public interface BookDao {
     
     Book getById(Long id);
     
-    void updateBook(Book saved);
+    Book updateBook(Book saved);
     
     Book findBookByTitle(String clean_code);
     
     Book findByISBN(String isbn);
-    
-    Book findBookByTitleCriteria(String title);
-    
-    Book findBookByTitleNative(String title);
 }
 
