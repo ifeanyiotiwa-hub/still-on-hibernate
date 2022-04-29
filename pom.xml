@@ -16,6 +16,7 @@
 
     <modules>
         <module>hibernate-dao-section</module>
+        <module>spring-data-jpa-section</module>
     </modules>
 
 </project>
