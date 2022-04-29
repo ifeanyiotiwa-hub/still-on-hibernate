@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * <PRE>Created by on 04/28/22.</PRE>
@@ -93,6 +95,18 @@ public class AuthorDaoImpl implements AuthorDao {
             em.flush();
             em.getTransaction()
                     .commit();
+        } finally {
+            em.close();
+        }
+    }
+    
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastName) {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createQuery("SELECT a FROM Author a WHERE a.lastName LIKE :lastName");
+            query.setParameter("lastName", "%" + lastName + "%");
+            return query.getResultList();
         } finally {
             em.close();
         }
