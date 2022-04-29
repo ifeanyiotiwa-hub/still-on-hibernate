@@ -8,6 +8,11 @@ import java.util.Objects;
  * @author Ifeanyichukwu Otiwa
  */
 
+@NamedQueries({
+        @NamedQuery(name = "book_find_all", query = "FROM Book"),
+        @NamedQuery(name = "find_book_by_title", query = "FROM Book b WHERE b.title = :title")
+})
+@NamedQuery(name = "get_all_books", query = "FROM Book")
 @Entity
 public class Book {
 

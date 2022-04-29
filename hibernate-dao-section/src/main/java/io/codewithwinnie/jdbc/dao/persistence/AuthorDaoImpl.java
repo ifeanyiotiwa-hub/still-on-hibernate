@@ -4,10 +4,8 @@ import io.codewithwinnie.jdbc.dao.AuthorDao;
 import io.codewithwinnie.jdbc.entity.Author;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
@@ -47,7 +45,51 @@ public class AuthorDaoImpl implements AuthorDao {
             em.close();
         }
     }
+    
+    @Override
+    public Author findAuthorByNameCriteria(String firstName, String lastName) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Author> criteriaQuery = criteriaBuilder.createQuery(Author.class);
+    
+            Root<Author> root = criteriaQuery.from(Author.class);
+    
+            ParameterExpression<String> firstNameParameter = criteriaBuilder.parameter(String.class);
+            ParameterExpression<String> lastNameParameter = criteriaBuilder.parameter(String.class);
+    
+            Predicate firstNamePred = criteriaBuilder.equal(root.get("firstName"), firstNameParameter);
+            Predicate lastNamePred = criteriaBuilder.equal(root.get("lastName"), lastNameParameter);
+            
+            criteriaQuery.select(root).where(criteriaBuilder.and(firstNamePred, lastNamePred));
+            
+            TypedQuery<Author> typedQuery = entityManager.createQuery(criteriaQuery);
+            typedQuery.setParameter(firstNameParameter, firstName);
+            typedQuery.setParameter(lastNameParameter, lastName);
+            
+            return typedQuery.getSingleResult();
+        } finally {
+            entityManager.close();
+        }
 
+    }
+    
+    @Override
+    public Author findAuthorByNameNative(String firstName, String lastName) {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM author b WHERE b.first_name = ? AND b.last_name = ?",
+                    Author.class);
+            
+            query.setParameter(1, firstName);
+            query.setParameter(2, lastName);
+            
+            return (Author) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+    
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
         EntityManager em = getEntityManager();

@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.List;
 
 @Component
 public class BookDaoImpl implements BookDao {
@@ -15,6 +17,19 @@ public class BookDaoImpl implements BookDao {
     
     public BookDaoImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+    
+    @Override
+    public List<Book> findAll() {
+        EntityManager em = getEntityManager();
+        
+        try {
+            TypedQuery<Book> booksQuery = em.createNamedQuery("book_find_all", Book.class);
+            List<Book> books = booksQuery.getResultList();
+            return books;
+        } finally {
+            em.close();
+        }
     }
     
     @Override
@@ -75,10 +90,37 @@ public class BookDaoImpl implements BookDao {
     public Book findBookByTitle(String clean_code) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b where b.title = :title", Book
-                                                                                                           .class);
+            //TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b where b.title = :title", Book
+            //                                                                                             .class);
+            TypedQuery<Book> query = em.createNamedQuery("find_book_by_title",Book.class);
             query.setParameter("title", clean_code);
             return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+    
+    @Override
+    public Book findBookByTitleCriteria(String title) {
+        EntityManager em = getEntityManager();
+        
+        try{
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+    
+            CriteriaQuery<Book> cq = cb.createQuery(Book.class);
+    
+            Root<Book> root = cq.from(Book.class);
+    
+            ParameterExpression<String> titleParam = cb.parameter(String.class);
+            
+            Predicate titlePredicate = cb.equal(root.get("title"), titleParam);
+            
+            cq.select(root).where(titlePredicate);
+            
+            TypedQuery<Book> typedQuery = em.createQuery(cq);
+            typedQuery.setParameter(titleParam,title);
+            
+            return typedQuery.getSingleResult();
         } finally {
             em.close();
         }

@@ -30,6 +30,49 @@ public class DaoIntegrationTest {
 
     @Autowired
     BookDao bookDao;
+    
+    @Test
+    void testFindAllBooks() {
+        List<Book> books = bookDao.findAll();
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
+    
+    @Test
+    void testFindBookByTitle() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST" + RandomString.make());
+        
+        Book saved = bookDao.saveNewBook(book);
+        
+        Book fetched = bookDao.findBookByTitle(book.getTitle());
+        assertThat(fetched).isNotNull();
+    }
+    
+    @Test
+    void testFindBookByTitleCriteria() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST" + RandomString.make());
+        
+        Book saved = bookDao.saveNewBook(book);
+        
+        Book fetched = bookDao.findBookByTitleCriteria(book.getTitle());
+        assertThat(fetched).isNotNull();
+    }
+    
+    @Test
+    void testFindBookByISBN() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN TEST");
+        
+        Book saved = bookDao.saveNewBook(book);
+        
+        Book fetched = bookDao.findByISBN(book.getIsbn());
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void testDeleteBook() {
@@ -145,6 +188,20 @@ public class DaoIntegrationTest {
 
         assertThat(author).isNotNull();
     }
+    
+    @Test
+    void testGetAuthorByNameCriteria() {
+        Author author = authorDao.findAuthorByNameCriteria("Craig", "Walls");
+
+        assertThat(author).isNotNull();
+    }
+    
+    @Test
+    void testGetAuthorByNameNative() {
+        Author author = authorDao.findAuthorByNameNative("Craig", "Walls");
+        
+        assertThat(author).isNotNull();
+    }
 
     @Test
     void testGetAuthor() {
@@ -160,19 +217,6 @@ public class DaoIntegrationTest {
         List<Author> authorList = authorDao.listAuthorByLastNameLike("Walls");
         assertThat(authorList).isNotNull();
         assertThat(authorList.size()).isGreaterThan(0);
-    }
-    
-    
-    @Test
-    void testFindBookByISBN() {
-        Book book = new Book();
-        book.setIsbn("1234" + RandomString.make());
-        book.setTitle("ISBN TEST");
-        
-        Book saved = bookDao.saveNewBook(book);
-        
-        Book fetched = bookDao.findByISBN(book.getIsbn());
-        assertThat(fetched).isNotNull();
     }
     
     @Test

@@ -1,8 +1,13 @@
 package io.codewithwinnie.jdbc.dao;
 
+import io.codewithwinnie.jdbc.entity.Author;
 import io.codewithwinnie.jdbc.entity.Book;
 
+import java.util.List;
+
 public interface BookDao {
+    
+    List<Book> findAll();
     Book saveNewBook(Book book);
     
     void deleteBookById(Long id);
@@ -14,4 +19,7 @@ public interface BookDao {
     Book findBookByTitle(String clean_code);
     
     Book findByISBN(String isbn);
+    
+    Book findBookByTitleCriteria(String title);
+    
 }
