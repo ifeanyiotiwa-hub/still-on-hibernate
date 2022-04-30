@@ -1,11 +1,9 @@
 package io.codewithwinnie.sdjpa;
 
 import io.codewithwinnie.sdjpa.dao.AuthorDao;
+import io.codewithwinnie.sdjpa.dao.logic.hibernate.AuthorDaoHibernateImpl;
 import io.codewithwinnie.sdjpa.entity.Author;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -28,7 +27,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class AuthorDaoHibernateIntegrationTest {
     
     @Autowired
+    private EntityManagerFactory entityManagerFactory;
     AuthorDao authorDao;
+    
+    @BeforeEach
+    void setUp() {
+        authorDao = new AuthorDaoHibernateImpl(entityManagerFactory);
+    }
     
     @Order(1)
     @Test

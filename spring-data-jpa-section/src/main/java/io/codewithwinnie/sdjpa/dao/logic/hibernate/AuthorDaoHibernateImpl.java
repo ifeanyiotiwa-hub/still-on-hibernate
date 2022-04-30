@@ -10,7 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Component
+//@Component
 public class AuthorDaoHibernateImpl implements AuthorDao {
     private final EntityManagerFactory entityManagerFactory;
     
