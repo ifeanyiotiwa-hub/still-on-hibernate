@@ -10,7 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 
-@Component
+//@Component
 public class BookDaoImpl implements BookDao {
     private final BookRepository bookRepository;
     

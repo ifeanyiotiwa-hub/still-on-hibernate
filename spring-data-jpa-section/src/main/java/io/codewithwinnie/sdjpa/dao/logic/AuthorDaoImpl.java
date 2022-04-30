@@ -3,6 +3,7 @@ package io.codewithwinnie.sdjpa.dao.logic;
 import io.codewithwinnie.sdjpa.dao.AuthorDao;
 import io.codewithwinnie.sdjpa.entity.Author;
 import io.codewithwinnie.sdjpa.repositories.AuthorRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +12,26 @@ import java.util.List;
 @Component
 public class AuthorDaoImpl implements AuthorDao {
     private final AuthorRepository authorRepository;
+    
+    @Override
+    public List<Author> findAllByLastNameSortByFirstName(String lastName, Pageable pageable) {
+        return null;
+    }
+    
+    @Override
+    public List<Author> findAll(Pageable pageable) {
+        return null;
+    }
+    
+    @Override
+    public List<Author> findAllByLastName(String smith) {
+        return null;
+    }
+    
+    @Override
+    public List<Author> findAllByLastName(String lastName, Pageable pageable) {
+        return null;
+    }
     
     public AuthorDaoImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;

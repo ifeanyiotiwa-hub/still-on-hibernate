@@ -1,6 +1,7 @@
 package io.codewithwinnie.sdjpa.entity;
 
 import javax.persistence.*;
+import java.util.StringJoiner;
 
 
 /**
@@ -15,6 +16,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
     private String lastName;
 
@@ -40,5 +42,16 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    
+    
+    @Override
+    public String toString() {
+        return new StringJoiner("", Author.class.getSimpleName() + "= {\n", "}\n")
+                .add("\t\t\t\"id\": \"" + id + "\",\n")
+                .add("\t\t\t\"firstName\": \"" + firstName + "\",\n")
+                .add("\t\t\t\"lastName\": \"" + lastName + "\"")
+                .toString();
     }
 }
