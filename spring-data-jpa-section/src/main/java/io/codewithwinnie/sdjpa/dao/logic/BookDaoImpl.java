@@ -3,6 +3,8 @@ package io.codewithwinnie.sdjpa.dao.logic;
 import io.codewithwinnie.sdjpa.dao.BookDao;
 import io.codewithwinnie.sdjpa.entity.Book;
 import io.codewithwinnie.sdjpa.repositories.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 
-//@Component
+@Component
 public class BookDaoImpl implements BookDao {
     private final BookRepository bookRepository;
     
@@ -20,17 +22,18 @@ public class BookDaoImpl implements BookDao {
     
     @Override
     public List<Book> findAllBookSortByTitle(Pageable pageable) {
-        return null;
+        Page<Book> pagedBook = bookRepository.findAll(pageable);
+        return pagedBook.getContent();
     }
     
     @Override
     public List<Book> findAllBooks(Pageable pageable) {
-        return null;
+        return bookRepository.findAll(pageable).getContent();
     }
     
     @Override
     public List<Book> findAllBooks(int pageSize, int offSet) {
-        return null;
+        return findAllBooks(PageRequest.of(offSet/pageSize, pageSize));
     }
     
     @Override

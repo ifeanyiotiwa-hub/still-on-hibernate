@@ -9,32 +9,32 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-//@Component
+@Component
 public class AuthorDaoImpl implements AuthorDao {
     private final AuthorRepository authorRepository;
     
+    public AuthorDaoImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+    
     @Override
     public List<Author> findAllByLastNameSortByFirstName(String lastName, Pageable pageable) {
-        return null;
+        return authorRepository.findAuthorByLastName(lastName, pageable).getContent();
     }
     
     @Override
     public List<Author> findAll(Pageable pageable) {
-        return null;
+        return authorRepository.findAll(pageable).getContent();
     }
     
     @Override
-    public List<Author> findAllByLastName(String smith) {
-        return null;
+    public List<Author> findAllByLastName(String lastName) {
+        return authorRepository.findAllByLastName(lastName);
     }
     
     @Override
     public List<Author> findAllByLastName(String lastName, Pageable pageable) {
-        return null;
-    }
-    
-    public AuthorDaoImpl(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
+        return authorRepository.findAuthorByLastName(lastName, pageable).getContent();
     }
     
     @Override

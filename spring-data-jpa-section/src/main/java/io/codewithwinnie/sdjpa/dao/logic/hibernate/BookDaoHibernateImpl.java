@@ -11,7 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Component
+//@Component
 public class BookDaoHibernateImpl implements BookDao {
     private final EntityManagerFactory eManagerFactory;
     
