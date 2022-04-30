@@ -45,6 +45,19 @@ public class BookRepositoryTest {
     }
     
     @Test
+    void testBookAuthorIdStream() {
+        AtomicInteger count = new AtomicInteger();
+        
+        bookRepository.findAllByAuthorIdNull().forEach(book -> {
+            System.err.println(book);
+            count.incrementAndGet();
+        });
+        
+        assertThat(count.get()).isGreaterThan(5);
+    }
+    
+    
+    @Test
     void testEmptyResultException() {
         
         assertThrows(EmptyResultDataAccessException.class, () -> {

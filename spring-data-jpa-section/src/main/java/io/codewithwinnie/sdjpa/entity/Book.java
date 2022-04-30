@@ -2,6 +2,7 @@ package io.codewithwinnie.sdjpa.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * <PRE>Created by on 04/28/22.</PRE>
@@ -83,5 +84,16 @@ public class Book {
 
     public void setAuthorId(Long authorId) {
         this.authorId = authorId;
+    }
+    
+    @Override
+    public String toString() {
+        return new StringJoiner("", "\n" + Book.class.getSimpleName() + " = {\n", "}")
+                .add("        \"id\": \"" + id + "\",\n")
+                .add("        \"title\": \"" + title + "\",\n")
+                .add("        \"isbn\": \"" + isbn + "\",\n")
+                .add("        \"publisher\": \"" + publisher + "\",\n")
+                .add("        \"authorId\": \"" + authorId + "\"\n")
+                .toString();
     }
 }
