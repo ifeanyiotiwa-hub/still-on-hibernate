@@ -36,7 +36,7 @@ public class SDJPADaoIntegrationTest {
     
     @Test
     void testFindAllBooks() {
-        List<Book> books = bookDao.findAll();
+        List<Book> books = bookDao.findAllBooks();
         assertThat(books).isNotNull();
         assertThat(books.size()).isGreaterThan(0);
     }

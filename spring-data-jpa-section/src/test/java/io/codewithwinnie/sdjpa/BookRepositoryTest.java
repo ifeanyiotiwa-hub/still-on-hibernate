@@ -25,6 +25,29 @@ public class BookRepositoryTest {
     @Autowired
     BookRepository bookRepository;
     
+    @Test
+    void testBookNamedQuery() {
+        Book book = bookRepository.jpaNamed("Clean Code");
+        assertThat(book).isNotNull();
+    }
+    
+    @Test
+    void testBookNativeQuery() {
+        Book book = bookRepository.findByTitleWithNativeQuery("Clean Code");
+        assertThat(book).isNotNull();
+    }
+    
+    @Test
+    void testBookQueryNamed() {
+        Book book = bookRepository.findByTitleWithQueryNamed("Clean Code");
+        assertThat(book).isNotNull();
+    }
+    
+    @Test
+    void testBookQuery() {
+        Book book = bookRepository.findBookByTitleWithQuery("Clean Code");
+         assertThat(book).isNotNull();
+    }
     
     @Test
     void testBookFutures() throws Exception {

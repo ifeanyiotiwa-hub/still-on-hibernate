@@ -7,16 +7,16 @@ import java.util.List;
 
 public interface BookDao {
     
-    List<Book> findAll();
+    List<Book> findAllBooks();
     Book saveNewBook(Book book);
     
     void deleteBookById(Long id);
     
     Book getById(Long id);
     
-    Book updateBook(Book saved);
+    Book updateBook(Book book);
     
-    Book findBookByTitle(String clean_code);
+    Book findBookByTitle(String title);
     
     Book findByISBN(String isbn);
 }

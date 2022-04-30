@@ -9,6 +9,7 @@ import java.util.StringJoiner;
  * @author Ifeanyichukwu Otiwa
  */
 
+@NamedQuery(name = "Book.jpaNamed", query = "FROM Book b WHERE b.title = :title")
 @Entity
 public class Book {
 
