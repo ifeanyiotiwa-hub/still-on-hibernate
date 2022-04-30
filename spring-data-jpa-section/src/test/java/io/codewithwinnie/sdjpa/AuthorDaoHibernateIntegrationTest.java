@@ -55,6 +55,17 @@ public class AuthorDaoHibernateIntegrationTest {
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isGreaterThanOrEqualTo(10);
     }
+    
+    @Order(11)
+    @Test
+    void testFindAllByLastName_pageableSortByFirstNameAscPage1() {
+        List<Author> authors = authorDao.findAllByLastNameSortByFirstName("Smith", PageRequest.of(0, 10,
+                Sort.by(Sort.Order.asc("first_name"))));
+        authors.forEach(System.err::println);
+        assertThat(authors.get(0).getFirstName()).isEqualTo("Ahmed");
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThanOrEqualTo(10);
+    }
     @Order(3)
     @Test
     void testFindAllByLastName_pageableSortByFirstNameDescPage4() {
