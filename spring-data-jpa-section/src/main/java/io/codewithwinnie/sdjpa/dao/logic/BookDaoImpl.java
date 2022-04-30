@@ -18,6 +18,11 @@ public class BookDaoImpl implements BookDao {
     }
     
     @Override
+    public List<Book> findAllBooks(int pageSize, int offSet) {
+        return null;
+    }
+    
+    @Override
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
     }
@@ -55,5 +60,10 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book findByISBN(String isbn) {
         return bookRepository.findByIsbn(isbn).orElseThrow(EntityNotFoundException::new);
+    }
+    
+    @Override
+    public int count() {
+        return 0;
     }
 }

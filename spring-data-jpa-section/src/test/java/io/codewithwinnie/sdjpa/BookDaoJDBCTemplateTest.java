@@ -13,6 +13,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,6 +32,15 @@ public class BookDaoJDBCTemplateTest {
     void setUp() {
         bookdao = new BookDaoJDBCTemplateImpl(jdbcTemplate);
     }
+    
+    @Test
+    void testFindAllBooks() {
+        List<Book> books = bookdao.findAllBooks();
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(5);
+        System.err.println(bookdao.count());
+    }
+    
     
     @Test
     void testGetById() {
@@ -69,5 +80,21 @@ public class BookDaoJDBCTemplateTest {
         bookdao.deleteBookById(saved.getId());
         assertThrows(EmptyResultDataAccessException.class, () -> bookdao.getById(saved.getId()));
         
+    }
+    
+    @Test
+    void testFidAllBookPage1() {
+        List<Book> books = bookdao.findAllBooks(10, 0);
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFidAllBookPage2() {
+        List<Book> books = bookdao.findAllBooks(10, 100);
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(0);
     }
 }

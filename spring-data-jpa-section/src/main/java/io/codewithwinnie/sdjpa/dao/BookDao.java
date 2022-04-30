@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BookDao {
     
+    List<Book> findAllBooks(int pageSize, int offSet);
     List<Book> findAllBooks();
     Book saveNewBook(Book book);
     
@@ -19,5 +20,6 @@ public interface BookDao {
     Book findBookByTitle(String title);
     
     Book findByISBN(String isbn);
+    int count();
 }
 
