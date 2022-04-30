@@ -42,7 +42,8 @@ public class DaoIntegrationTest {
     void testFindBookByTitle() {
         Book book = new Book();
         book.setIsbn("1234" + RandomString.make());
-        book.setTitle("ISBN TEST" + RandomString.make());
+        book.setTitle("Title-" + RandomString.make() + " TEST");
+        book.setPublisher("Publisher-" + RandomString.make());
         
         Book saved = bookDao.saveNewBook(book);
         

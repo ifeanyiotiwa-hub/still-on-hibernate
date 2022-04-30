@@ -3,6 +3,7 @@ package io.codewithwinnie.sdjpa.dao.logic.jdbctemplate;
 import io.codewithwinnie.sdjpa.dao.BookDao;
 import io.codewithwinnie.sdjpa.dao.logic.jdbctemplate.mapper.BookRowMapper;
 import io.codewithwinnie.sdjpa.entity.Book;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -22,6 +23,20 @@ public class BookDaoJDBCTemplateImpl implements BookDao {
     public int count() {
       List<Book> books =  jdbcTemplate.query("SELECT * FROM book ", getBookRowMapper());
       return books.size();
+    }
+    
+    @Override
+    public List<Book> findAllBookSortByTitle(Pageable pageable) {
+        String SQL =
+                "SELECT * FROM book order by title " + pageable.getSort().getOrderFor("title").getDirection().name() +
+                             " limit ? offset ?";
+        return jdbcTemplate.query(SQL, getBookRowMapper(), pageable.getPageSize(), pageable.getOffset());
+    }
+    
+    @Override
+    public List<Book> findAllBooks(Pageable pageable) {
+        return jdbcTemplate.query("SELECT * FROM book limit ? offset ?",getBookRowMapper()
+                                        , pageable.getPageSize(), pageable.getOffset());
     }
     
     @Override

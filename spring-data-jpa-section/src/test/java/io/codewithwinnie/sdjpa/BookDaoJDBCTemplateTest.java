@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -93,6 +95,50 @@ public class BookDaoJDBCTemplateTest {
     @Test
     void testFidAllBookPage2() {
         List<Book> books = bookdao.findAllBooks(10, 100);
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(0);
+    }
+    
+    @Test
+    void testFidAllBookPage1_pageable() {
+        List<Book> books = bookdao.findAllBooks(PageRequest.of(0, 10));
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFidAllBookPage2_pageable() {
+        List<Book> books = bookdao.findAllBooks(PageRequest.of(1, 10));
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFidAllBookPage9_pageable() {
+        List<Book> books = bookdao.findAllBooks(PageRequest.of(10, 10));
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(0);
+    }
+    
+    @Test
+    void testFidAllBookPage1_pageableSortByTitle() {
+        List<Book> books = bookdao.findAllBooks(PageRequest.of(0, 10
+                , Sort.by(Sort.Order.desc("title"))));
+        books.forEach(System.err::println);
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFidAllBookPage9_pageableSortableSQL() {
+        List<Book> books = bookdao.findAllBookSortByTitle(PageRequest.of(10, 10
+                                , Sort.by(Sort.Order.desc("title"))));
+        books.forEach(System.err::println);
         
         assertThat(books).isNotNull();
         assertThat(books.size()).isEqualTo(0);
