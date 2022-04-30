@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-@Component
+//@Component
 public class AuthorDaoImpl implements AuthorDao {
     private final AuthorRepository authorRepository;
     

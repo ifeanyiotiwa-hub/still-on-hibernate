@@ -26,8 +26,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ComponentScan(basePackages = {"io.codewithwinnie.sdjpa.dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BookDaoHibernateIntegrationTest {
-//    @Autowired
-//    AuthorDao authorDao;
 
     @Autowired
     BookDao bookDao;
@@ -151,90 +149,4 @@ public class BookDaoHibernateIntegrationTest {
         System.err.println(book);
         assertThat(book.getId()).isNotNull();
     }
-
-//    @Test
-//    void testDeleteAuthor() {
-//        Author author = new Author();
-//        author.setFirstName("john");
-//        author.setLastName("t");
-//
-//        Author saved = authorDao.saveNewAuthor(author);
-//
-//        authorDao.deleteAuthorById(saved.getId());
-//
-//        Author deleted = authorDao.getById(saved.getId());
-//
-//        assertThat(deleted).isNull();
-//
-//    }
-//
-//    @Test
-//    void testUpdateAuthor() {
-//        Author author = new Author();
-//        author.setFirstName("john");
-//        author.setLastName("t");
-//
-//        Author saved = authorDao.saveNewAuthor(author);
-//        System.err.println("Saved" + saved);
-//        saved.setLastName("Thompson");
-//        System.out.println(saved.getLastName());
-//        Author updated = authorDao.updateAuthor(saved);
-//        System.err.println("Updated " + updated);
-//        assertThat(updated.getLastName()).isEqualTo("Thompson");
-//    }
-//
-//    @Test
-//    void testSaveAuthor() {
-//        Author author = new Author();
-//        author.setFirstName("John");
-//        author.setLastName("Thompson");
-//        Author saved = authorDao.saveNewAuthor(author);
-//
-//        assertThat(saved).isNotNull();
-//        assertThat(saved.getId()).isNotNull();
-//    }
-//
-//    @Test
-//    void testGetAuthorByName() {
-//        Author author = authorDao.findAuthorByName("Craig", "Walls");
-//
-//        assertThat(author).isNotNull();
-//    }
-//
-//    @Test
-//    void testGetAuthorByNameCriteria() {
-//        Author author = authorDao.findAuthorByNameCriteria("Craig", "Walls");
-//
-//        assertThat(author).isNotNull();
-//    }
-//
-//    @Test
-//    void testGetAuthorByNameNative() {
-//        Author author = authorDao.findAuthorByNameNative("Craig", "Walls");
-//
-//        assertThat(author).isNotNull();
-//    }
-//
-//    @Test
-//    void testGetAuthor() {
-//
-//        Author author = authorDao.getById(1L);
-//
-//        assertThat(author).isNotNull();
-//
-//    }
-//
-//    @Test
-//    void testListAuthorByLastNameLike() {
-//        List<Author> authorList = authorDao.listAuthorByLastNameLike("Walls");
-//        assertThat(authorList).isNotNull();
-//        assertThat(authorList.size()).isGreaterThan(0);
-//    }
-//
-//    @Test
-//    void testFindAllAuthors() {
-//        List<Author> authors = authorDao.findAll();
-//        authors.forEach(System.err::println);
-//        assertThat(authors.size()).isGreaterThan(0);
-//    }
 }
