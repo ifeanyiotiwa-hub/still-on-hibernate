@@ -97,7 +97,7 @@ public class BookDaoJDBCTemplateTest {
         List<Book> books = bookdao.findAllBooks(10, 100);
         
         assertThat(books).isNotNull();
-        assertThat(books.size()).isEqualTo(0);
+        assertThat(books.size()).isEqualTo(10);
     }
     
     @Test
@@ -121,7 +121,7 @@ public class BookDaoJDBCTemplateTest {
         List<Book> books = bookdao.findAllBooks(PageRequest.of(10, 10));
         
         assertThat(books).isNotNull();
-        assertThat(books.size()).isEqualTo(0);
+        assertThat(books.size()).isEqualTo(10);
     }
     
     @Test
@@ -141,6 +141,6 @@ public class BookDaoJDBCTemplateTest {
         books.forEach(System.err::println);
         
         assertThat(books).isNotNull();
-        assertThat(books.size()).isEqualTo(0);
+        assertThat(books.size()).isEqualTo(10);
     }
 }

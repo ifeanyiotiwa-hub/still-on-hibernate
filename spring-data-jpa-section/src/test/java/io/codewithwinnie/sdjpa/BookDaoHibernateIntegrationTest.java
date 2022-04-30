@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -29,6 +31,35 @@ public class BookDaoHibernateIntegrationTest {
 
     @Autowired
     BookDao bookDao;
+    
+    
+    @Test
+    void testFindAllBooks_pageableWithSort() {
+        List<Book> books = bookDao.findAllBooks(PageRequest.of(0, 10
+                , Sort.by(Sort.Order.desc("title"))));
+        books.forEach(System.err::println);
+        
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFindAllBooks_pageableSortByTitle() {
+        List<Book> books = bookDao.findAllBookSortByTitle(PageRequest.of(0, 10
+                , Sort.by(Sort.Order.desc("title"))));
+        books.forEach(System.err::println);
+    
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    
+    @Test
+    void testFindAllBooks_pageable() {
+        List<Book> books = bookDao.findAllBooks(PageRequest.of(0, 10));
+    
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
     
     @Test
     void testFindAllBooks() {
